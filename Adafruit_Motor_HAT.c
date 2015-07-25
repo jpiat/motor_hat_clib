@@ -150,7 +150,7 @@ void  setPin(int pin, int value){
 }
 
 
-int init_motor(struct motor * mot, int motor_nb){
+int motor_init(struct motor * mot, int motor_nb){
 	if(hat.i2c_fd == 0){
 		init_hat();
 		setPWMFreq(1600);
@@ -158,10 +158,10 @@ int init_motor(struct motor * mot, int motor_nb){
 	hat.mot_init[motor_nb-1] = 1 ;
 	mot->nb = motor_nb ;
 	mot->pins = &(mot_pins_array[motor_nb-1]);
-	mot_run(RELEASE, mot);
+	motor_run(RELEASE, mot);
 }
 
-void mot_run(enum mot_command command, struct motor * mot){
+void motor_run(enum mot_command command, struct motor * mot){
                 if (command == FORWARD){
                         setPin(mot->pins->in2, 0);
                         setPin(mot->pins->in1, 1);
@@ -177,7 +177,7 @@ void mot_run(enum mot_command command, struct motor * mot){
                 }
 }
 
-void setSpeed(int speed, struct motor * mot){
+void motor_set_speed(int speed, struct motor * mot){
         if (speed < 0){
                 speed = 0;
         }else if (speed > 255){
@@ -186,9 +186,9 @@ void setSpeed(int speed, struct motor * mot){
         setPWM(mot->pins->pwm, 0, speed*16);
 }
 
-void close_motor(struct motor * mot){
+void motor_close(struct motor * mot){
 	int i ;	
-	mot_run(RELEASE, mot);
+	motor_run(RELEASE, mot);
 	hat.mot_init[mot->nb-1] = 0 ;
 	for(i = 0 ; i < 4 ; i ++) if(hat.mot_init[i] != 0) return ; // if not all motor were killed
 	close(hat.i2c_fd);

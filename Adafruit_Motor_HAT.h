@@ -33,10 +33,10 @@ struct motor{
 	int nb ;
 };
 
-int init_motor(struct motor * mot, int motor_nb);
-void mot_run(enum mot_command command, struct motor * mot);
-void setSpeed(int speed, struct motor * mot);
-void close_motor(struct motor * mot);
+int motor_init(struct motor * mot, int motor_nb);
+void motor_run(enum mot_command command, struct motor * mot);
+void motor_set_speed(int speed, struct motor * mot);
+void motor_close(struct motor * mot);
 
 
 #endif

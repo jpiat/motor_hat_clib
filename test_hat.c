@@ -4,21 +4,21 @@
 int main(void){
 	struct motor mot3 ;
 	struct motor mot4 ;
-	init_motor(&mot3, 3);
-	init_motor(&mot4, 4);
+	motor_init(&mot3, 3);
+	motor_init(&mot4, 4);
 
-	mot_run(RELEASE, &mot3);
-	mot_run(RELEASE, &mot4);
+	motor_run(RELEASE, &mot3);
+	motor_run(RELEASE, &mot4);
 
-	setSpeed(80, &mot4);
-	mot_run(BACKWARD, &mot4);
-	setSpeed(80, &mot3);
-	mot_run(FORWARD, &mot3);
+	motor_set_speed(80, &mot4);
+	motor_run(BACKWARD, &mot4);
+	motor_set_speed(80, &mot3);
+	motor_run(FORWARD, &mot3);
 	sleep(2);
-	setSpeed(0, &mot3);
+	motor_set_speed(0, &mot3);
 	sleep(1);
-	setSpeed(80, &mot3);
+	motor_set_speed(80, &mot3);
 	sleep(2);
-	close_motor(&mot3);
-	close_motor(&mot4);
+	motor_close(&mot3);
+	motor_close(&mot4);
 }
