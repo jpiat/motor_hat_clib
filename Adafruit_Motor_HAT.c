@@ -40,6 +40,11 @@
 #define MOT_3_IN2 6
 #define MOT_3_IN1 5
 
+#define USER_PWM_0 0
+#define USER_PWM_1 1
+#define USER_PWM_2 14
+#define USER_PWM_3 15
+
 struct mot_pins mot_pins_array[] = {{MOT_0_PWM, MOT_0_IN1, MOT_0_IN2}, {MOT_1_PWM, MOT_1_IN1, MOT_1_IN2}, {MOT_2_PWM, MOT_2_IN1, MOT_2_IN2}, {MOT_3_PWM, MOT_3_IN1, MOT_3_IN2}};
 
 
@@ -125,7 +130,7 @@ void setPWMFreq(unsigned int freq){
 
 
 
-void setPWM(int channel, int on, int off){
+void set_pwm_on_off(int channel, int on, int off){
     i2c_write8(REG_LED0_ON_L+4*channel, on & 0xFF);
     i2c_write8(REG_LED0_ON_H+4*channel, on >> 8);
     i2c_write8(REG_LED0_OFF_L+4*channel, off & 0xFF);
@@ -143,9 +148,9 @@ void setAllPWM(int on, int off){
 
 void  setPin(int pin, int value){
                 if (value == 0){
-                        setPWM(pin, 0, 4096) ;
+                        set_pwm_on_off(pin, 0, 4096) ;
 		}else{
-                        setPWM(pin, 4096, 0) ;
+                        set_pwm_on_off(pin, 4096, 0) ;
 		}
 }
 
@@ -183,7 +188,7 @@ void motor_set_speed(int speed, struct motor * mot){
         }else if (speed > 255){
                 speed = 255;
 	}
-        setPWM(mot->pins->pwm, 0, speed*16);
+        set_pwm_on_off(mot->pins->pwm, 0, speed*16);
 }
 
 void motor_close(struct motor * mot){

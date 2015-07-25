@@ -37,6 +37,8 @@ int motor_init(struct motor * mot, int motor_nb);
 void motor_run(enum mot_command command, struct motor * mot);
 void motor_set_speed(int speed, struct motor * mot);
 void motor_close(struct motor * mot);
+//direct control of PWM channels, to be used with spare pins
+void set_pwm_on_off(int channel, int on, int off);
 
 
 #endif
